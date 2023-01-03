@@ -1,0 +1,172 @@
+// import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+// import Cookies from 'js-cookie';
+// import { axiosAuth, SetAuthCookie } from 'esstart-components';
+
+// export const authSliceName = 'auth';
+
+// const initialState = {
+//   username: Cookies.get('username') || '',
+//   accessToken: Cookies.get('accessToken') || '',
+
+//   refreshToken: Cookies.get('refreshToken') || '',
+//   loading: false,
+//   userId: Cookies.get('userId') || '',
+//   noOfDevices: '',
+//   name: '',
+//   verifyStatus: 0,
+//   resetEmailStatus: false
+// };
+
+// interface SignInPayload {
+//   email: string;
+//   password: string;
+// }
+
+// interface SignUpPayload {
+//   email: string;
+//   password: string;
+//   productId: string;
+// }
+
+// interface ResendEmailPayload {
+//   userName: string;
+// }
+
+// export const signInUser = createAsyncThunk(
+//   'auth/signin',
+//   async (args: SignInPayload, { rejectWithValue }) => {
+//     const { email, password } = args;
+//     try {
+//       Cookies.set('username', email);
+//       const res = await axiosAuth.get('/auth-tokens', {
+//         auth: {
+//           username: email,
+//           password: password,
+//         },
+//       });
+//       if (res.status === 200) {
+//         SetAuthCookie(res?.data?.data);
+//       }
+//       return res.data;
+//     } catch (err: any) {
+//       throw rejectWithValue(err.response.data);
+//     }
+//   }
+// );
+
+// export const resendEmail = createAsyncThunk(
+//   'auth/resendEmail',
+//   async (args: ResendEmailPayload, { rejectWithValue }) => {
+//     const { userName } = args;
+//     try {
+//       const res = await axiosAuth.post('/resend-link', {userName: userName});
+//       return res.data;
+//     } catch (err: any) {
+//       throw rejectWithValue(err.response.data);
+//     }
+//   }
+// );
+
+// export const signUpUser = createAsyncThunk(
+//   'auth/signup',
+//   async (args: SignUpPayload, { rejectWithValue }) => {
+//     const { email, password, productId } = args;
+//     try {
+//       const res = await axiosAuth.post('/register', {
+//         email,
+//         password,
+//         productId,
+//       });
+//       Cookies.set('username', email);
+//       return { ...res.data, email };
+//     } catch (err: any) {
+//       throw rejectWithValue(err.response.data);
+//     }
+//   }
+// );
+
+// export const socialLoginSuccess = createAsyncThunk(
+//   'auth/socialLoginSuccess2',
+//   async (args: any) => {
+//     const { token, expiry } = args;
+//     Cookies.set('accessToken', token, { expires: new Date(expiry * 1000) });
+//     return { token };
+//     // console.log(token);
+//   }
+// );
+
+// export const confirmUser = createAsyncThunk(
+//   'auth/confirmUser',
+//   async (args: any, { rejectWithValue }) => {
+//     const { username, confirmationCode } = args;
+//     try {
+//       const res = await axiosAuth.put('/user-confirmation', {
+//         username,
+//         confirmationCode,
+//       });
+//       if (res.status === 200) {
+//         SetAuthCookie(res?.data?.data);
+//       }
+//       return { ...res.data };
+//     } catch (err: any) {
+//       throw rejectWithValue(err.response.status);
+//     }
+//   }
+// );
+
+// const authSlice = createSlice({
+//   name: 'auth',
+//   initialState: initialState,
+//   reducers: {},
+//   extraReducers: (builder) => {
+//     builder.addCase(signInUser.pending, (state) => {
+//       state.loading = true;
+//     });
+//     builder.addCase(signInUser.rejected, (state) => {
+//       state.loading = false;
+//     });
+//     builder.addCase(signInUser.fulfilled, (state, action) => {
+//       state.loading = false;
+//       state.username = action.payload?.data?.username;
+//       state.accessToken =
+//         action.payload?.data?.AuthenticationResult?.AccessToken;
+//       state.refreshToken =
+//         action.payload?.data?.AuthenticationResult?.RefreshToken;
+//     });
+//     builder.addCase(confirmUser.pending, (state) => {
+//       state.loading = true;
+//     });
+//     builder.addCase(confirmUser.rejected, (state, action: any) => {
+//       state.loading = false;
+//       state.verifyStatus = action.payload;
+//     });
+//     builder.addCase(confirmUser.fulfilled, (state, action) => {
+//       state.loading = false;
+//       state.username = action.payload?.data?.username;
+//       state.accessToken =
+//         action.payload?.data?.AuthenticationResult?.AccessToken;
+//       state.refreshToken =
+//         action.payload?.data?.AuthenticationResult?.RefreshToken;
+//     });
+//     builder.addCase(signUpUser.fulfilled, (state, action) => {
+//       state.loading = false;
+//     });
+//     builder.addCase(socialLoginSuccess.fulfilled, (state, action) => {
+//       state.accessToken = action.payload.token;
+//     });
+//     builder.addCase(resendEmail.pending, (state) => {
+//       state.loading = true;
+//       state.resetEmailStatus = false;
+//     });
+//     builder.addCase(resendEmail.rejected, (state) => {
+//       state.loading = false;
+//       state.resetEmailStatus = false;
+//     });
+//     builder.addCase(resendEmail.fulfilled, (state) => {
+//       state.loading = false;
+//       state.resetEmailStatus = true;
+//     });
+//   },
+// });
+
+// export const authReducer = authSlice.reducer;

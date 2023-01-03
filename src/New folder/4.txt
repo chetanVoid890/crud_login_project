@@ -1,0 +1,44 @@
+import Cookies from "js-cookie";
+import { axiosAuth } from "./axios";
+import { getCookie, SetAuthCookie, setCookie } from "../utils/Cookies";
+
+export const refreshTokenApi = async () => {
+  try {
+    const refreshToken = Cookies.get('refreshToken');
+    const res = await axiosAuth.get(`/refresh-auth-tokens?refreshToken=${refreshToken}`);
+    if (res?.status === 200) {
+      SetAuthCookie(res?.data?.data);
+    }
+    return res?.data?.status;
+  } catch (err) {
+    return err;
+  }
+}
+
+export const userInfo = async () => {
+  const config = {
+    method: 'GET',
+    headers: {
+      Authorization: Cookies.get('accessToken') as string,
+      Accept: 'application/json',
+    },
+  };
+  const res = await fetch(
+    `${process.env.REACT_APP_API_URL}/my/v1/my-info`,
+    config
+  );
+  const json = await res.json();
+  if (json?.data?.email) {
+  const userName = getCookie('username')
+  if(!userName){
+    setCookie('username', json?.data?.email)
+    // setCookie('username', json?.data?.email, {
+    //   domain: getDomain()
+    // })
+  }
+    setCookie('userId', json?.data?.userId)
+    // Cookies.set('username', json?.data?.email);
+    // Cookies.set('userId', json?.data?.userId);
+  }
+  return json?.data;
+}     

@@ -1,0 +1,18 @@
+.productCard .cardTitle_subTitle {
+  min-height: 90px;
+  align-items: baseline;
+}
+.productCard .cardTitle_subTitle .MuiCardHeader-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.productCard .product_desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 100px;
+  margin-bottom: 10px;
+}

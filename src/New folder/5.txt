@@ -1,0 +1,83 @@
+import Cookies from "js-cookie";
+
+export const SetAuthCookie = (data: any) => {
+  if (data) {
+    // const host = window.location.hostname;
+    // const domainParts = host.split('.') || [];
+    // domainParts.shift();
+    // let domain = '.' + domainParts.join('.');
+    // if (host.includes('localhost')) {
+    //   domain = 'localhost';
+    // } else {
+    //   Cookies.set('domain', domain);
+    // }
+
+    const finalExpireDate = new Date();
+    const expireDate = data.AuthenticationResult?.ExpiresIn;
+    finalExpireDate.setSeconds(finalExpireDate.getSeconds() + expireDate);
+    setCookie('accessToken', data.AuthenticationResult?.AccessToken, {
+      expires: finalExpireDate
+    });
+
+    setCookie(
+      'refreshToken',
+      data.AuthenticationResult?.RefreshToken
+    );
+
+    setCookie('expires', data.AuthenticationResult?.ExpiresIn, {
+      expires: finalExpireDate
+    });
+
+    setCookie('username', data.username, {
+      expires: finalExpireDate
+    });
+    // Cookies.set('accessToken', data?.AuthenticationResult?.AccessToken, { expires: data?.AuthenticationResult?.ExpiresIn });
+  }
+}
+
+export const removeAuthCookies = () => {
+  Cookies.remove('refreshToken');
+  const expiresIn = Cookies.get('expires');
+  // const domain = Cookies.get('domain');
+  // if (domain && expiresIn) {
+  //   Cookies.remove('accessToken', { expires: Number(expiresIn), domain });
+  //   Cookies.remove('refreshToken', { expires: Number(expiresIn), domain });
+  //   Cookies.remove('username', { expires: Number(expiresIn), domain });
+  //   Cookies.remove('userId', { expires: Number(expiresIn), domain });
+  // } else {
+  Cookies.remove('accessToken', { expires: Number(expiresIn) });
+  Cookies.remove('refreshToken', { expires: Number(expiresIn) });
+  Cookies.remove('username', { expires: Number(expiresIn) });
+  Cookies.remove('userId', { expires: Number(expiresIn) });
+  // }
+  Cookies.remove('refreshToken');
+  Cookies.remove('accessToken');
+  Cookies.remove('expires');
+  Cookies.remove('domain');
+  Cookies.remove('username');
+  Cookies.remove('userId');
+}
+
+export const getCookie = (key: string) => {
+  return Cookies.get(key);
+}
+
+// export const getDomain = () => {
+//   const host = window.location.hostname;
+//   const domainParts = host.split('.') || [];
+//   domainParts.shift();
+//   let domain = '.' + domainParts.join('.');
+//   if (host.includes('localhost')) {
+//     domain = 'localhost';
+//   } else {
+//     Cookies.set('domain', domain);
+//   }
+//   return domain;
+// }
+
+export const setCookie = (key: string, value: string, options?: any) => {
+  if (key && value) {
+    Cookies.set(key, value, { ...options });
+  }
+  // Cookies.set(key, value, { ...options, domain: getDomain()});
+};

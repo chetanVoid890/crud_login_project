@@ -1,0 +1,62 @@
+import React, { createContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { refreshTokenApi, userInfo } from "../services/auth";
+
+const Loading = 0;
+const SignedIn = 1;
+const SignedOut = 2;
+
+export const AuthStatus = {
+  Loading,
+  SignedIn,
+  SignedOut
+}
+
+const defaultState: any = {
+  authStatus: AuthStatus.Loading,
+  setAuthStatus: (auth: number) => {},
+  userInfoData: null
+}
+
+export const AuthContext = createContext(defaultState);
+
+export const AuthProvider = ({ children }: any) => {
+  const [authStatus, setAuthStatus] = useState(AuthStatus.Loading);
+  const [userInfoData, setUserInfoData] = useState(null);
+  const accessToken = Cookies.get('accessToken');
+  const refreshToken = Cookies.get('refreshToken');
+  
+  useEffect(() => {
+    (async function () {
+      if (accessToken) {
+        const data = await userInfo();   
+        setUserInfoData(data);
+        setAuthStatus(AuthStatus.SignedIn);
+      } else {
+        if (refreshToken && refreshToken !== undefined && refreshToken !== 'undefined') {
+          const getRefresh = await refreshTokenApi();
+          if(getRefresh === 'success'){
+            const data = await userInfo();
+            setUserInfoData(data);
+            setAuthStatus(AuthStatus.SignedIn);
+          }
+        } else {
+          setAuthStatus(AuthStatus.SignedOut);
+        }
+      }
+    })();
+  }, [accessToken]);
+
+  if (authStatus === AuthStatus.Loading) {
+    return null;
+  }
+  
+  const state = {
+    authStatus,
+    setAuthStatus,
+    userInfoData
+  }
+  return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>
+}
+
+// export default AuthProvider;
