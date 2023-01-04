@@ -7,28 +7,22 @@ import FormProvider from "../../../Hooks_Form/FormProvider";
 
 // ----------------------------------------------------------------------
 
-Delete_Modal.propTypes = {
-  onClose: PropTypes.func,
-  handleDelete: PropTypes.func,
-};
-
 export default function Delete_Modal({ onClose, handleDelete }) {
-  const methods = useForm({
-    // resolver: yupResolver(NewUserSchema)
-  });
+  const methods = useForm({});
 
   const { reset, handleSubmit } = methods;
 
   const deleteSubmit = async () => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 100));
       handleDelete();
     } catch (error) {
-      console.log("hello");
+      console.log("DeleteProblem");
     }
   };
 
   const onSubmit = async () => {
+    // window.location.reload(false);
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();

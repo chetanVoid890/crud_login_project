@@ -1,8 +1,8 @@
 import React from "react";
-import Login from "../Login/Login";
-import Product from "../product/Product";
-import Contact from "../Contact/Contact";
-import PageNotFound from "../PageNotfound/PageNotFound";
+import Login from "../Componant/Login/Login";
+import Product from "../Componant/product/Product";
+import Contact from "../Componant/Contact/Contact";
+import PageNotFound from "../Componant/PageNotfound/PageNotFound";
 import ReturnFuncction from "../ReturnFunction/ReturnFunction";
 import { Navigate } from "react-router-dom";
 import Crude from "../Componant/Crude/Crude";

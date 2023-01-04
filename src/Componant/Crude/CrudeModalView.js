@@ -1,32 +1,22 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "../../redux/store";
 // =====================================
 import * as Yup from "yup";
-import { useSnackbar } from "notistack";
-import PropTypes from "prop-types";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // ======================================================
 
-import {
-  Box,
-  Card,
-  Grid,
-  Stack,
-  Button,
-  Backdrop,
-  CircularProgress,
-} from "@mui/material";
+import { Box, Card, Grid, Stack, Button } from "@mui/material";
 
 // ======================================================
 
-import { addCrudData } from "../../redux/slice/crude/CrudeAction";
+import CrudeAction from "../../redux/slice/crude/CrudeAction";
 import RHFTextField from "../../Hooks_Form/TextFiled";
 import FormProvider from "../../Hooks_Form/FormProvider";
 
-const CrudeModalView = ({ onClose, onEdit, currentAlternator }) => {
-  // ============================================================
+const CrudeModalView = ({ onClose, onEdit, currentModal }) => {
+  const { responseStatus } = useSelector((state) => state.crude);
   const dispatch = useDispatch();
   const NewUserSchema = Yup.object().shape({
     category: Yup.string().required("Category is required"),
@@ -38,12 +28,12 @@ const CrudeModalView = ({ onClose, onEdit, currentAlternator }) => {
   // =======================================================
   const defaultValues = useMemo(
     () => ({
-      category: currentAlternator?.manufacturer || "",
-      price: currentAlternator?.serialNumber || "",
-      rate: currentAlternator?.powerRating || "",
-      count: currentAlternator?.noOfPhase || "",
+      category: currentModal?.category || "",
+      price: currentModal?.price || "",
+      rate: currentModal?.rate || "",
+      count: currentModal?.count || "",
     }),
-    []
+    [currentModal]
   );
 
   // =======================================================
@@ -60,37 +50,39 @@ const CrudeModalView = ({ onClose, onEdit, currentAlternator }) => {
     formState: { isSubmitting },
   } = methods;
 
+  useEffect(() => {
+    if (onEdit && currentModal) {
+      reset(defaultValues);
+    }
+    if (!onEdit) {
+      reset(defaultValues);
+    }
+    if (responseStatus === 201) {
+      reset();
+      onClose();
+    }
+  }, [onEdit, currentModal, responseStatus]);
+
   // useEffect(() => {
-  //   if (onEdit && currentAlternator) {
-  //     reset(defaultValues);
-  //   }
-  //   if (!onEdit) {
-  //     reset(defaultValues);
-  //   }
-  //   if (message !== "" && responseStatus !== "") {
-  //     enqueueSnackbar(message, {
-  //       variant: responseStatus === true ? "success" : "error",
-  //     });
-  //     if (responseStatus === true) {
-  //       reset();
-  // closeModal();
-  //     }
-  //   }
+  //   dispatch(CrudeAction.GetCrude());
   // }, []);
 
   // =======================================================
 
   const onSubmit = (data) => {
     console.log("data", data);
+    console.log("onEdit", onEdit);
     try {
       if (onEdit) {
         console.log("onEdit", onEdit);
+        console.log("editdataorignal", data);
+        console.log("currentModal._id", currentModal._id);
+        dispatch(CrudeAction.editCrudeData(currentModal._id, data));
       } else {
-        dispatch(addCrudData(data));
-        // console.log("fale", data);
+        dispatch(CrudeAction.addCrudData(data));
       }
     } catch (error) {
-      console.log("hello");
+      console.log("Add && Edit Eroor");
     }
   };
 
@@ -129,6 +121,7 @@ const CrudeModalView = ({ onClose, onEdit, currentAlternator }) => {
                   variant="contained"
                   loading={isSubmitting}
                   sx={{ mr: 3 }}
+                  // onClick={onClose}
                 >
                   {onEdit ? "Edit Alternator" : "Add Alternator"}
                 </LoadingButton>
