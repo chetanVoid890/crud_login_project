@@ -1,8 +1,7 @@
-import "../index.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import LoginUser from "../redux/slice/register/RegisterAction";
+import LoginUser from "../../redux/slice/register/RegisterAction";
 import { useFormik } from "formik";
 import { Button, TextField, Box } from "@mui/material";
 

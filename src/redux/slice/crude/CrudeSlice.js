@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   token: false,
-  message: "",
+  responseStatus: "",
   productList: [],
 };
 
@@ -13,11 +13,14 @@ const slice = createSlice({
     getDataSuccess(state, action) {
       state.productList = action.payload.data;
     },
-    addCrudeData(state, action) {
+    addCrudeDataSuccess(state, action) {
+      console.log("responseStatus===================", action.payload.status);
+      state.responseStatus = action.payload.status;
+    },
+    editCrudeDataSuccess(state, action) {
       // state.productList = action.payload.data;
     },
-
-    deleteCrudeSuccess(state, action) {
+    deleteCrudedataSuccess(state, action) {
       // state.productList = action.payload.data;
     },
   },
@@ -26,5 +29,9 @@ const slice = createSlice({
 export default slice.reducer;
 
 // Actions
-export const { deleteCrudeSuccess, getDataSuccess, addCrudeData } =
-  slice.actions;
+export const {
+  getDataSuccess,
+  addCrudeDataSuccess,
+  editCrudeDataSuccess,
+  deleteCrudedataSuccess,
+} = slice.actions;

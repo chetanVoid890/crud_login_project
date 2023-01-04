@@ -4,12 +4,13 @@ const getMethod = async () => {
   let resp = null;
   try {
     resp = await axios.get(
-      "https://crudcrud.com/api/bd28c8ad25e540b5be51e5a278b06fa8/data"
+      "https://crudcrud.com/api/e78e609927364d55afec771fb882cc10/data"
     );
-    console.log("getapi", resp);
+    // console.log("getapi", resp);
+    // console.log("responseStatus==========", resp.data, resp.status);
     return resp;
   } catch (err) {
-    console.log(err);
+    console.log("helloGet");
   }
 };
 
@@ -17,28 +18,43 @@ const postMethod = async (data) => {
   let resp = null;
   try {
     resp = await axios.post(
-      "https://crudcrud.com/api/bd28c8ad25e540b5be51e5a278b06fa8/data",
+      "https://crudcrud.com/api/e78e609927364d55afec771fb882cc10/data",
       data
     );
 
     console.log("postapi", resp);
     return resp;
   } catch (err) {
-    console.log(err);
+    console.log("helloPost");
+  }
+};
+
+const putMethod = async (moduleId, data) => {
+  let resp = null;
+  try {
+    resp = await axios.put(
+      `https://crudcrud.com/api/e78e609927364d55afec771fb882cc10/data/${moduleId}`,
+      data
+    );
+    return resp;
+  } catch (err) {
+    console.log("helloPut");
   }
 };
 
 const deleteMethod = async (listId) => {
-  const response = await axios.delete(
-    `https://crudcrud.com/api/bd28c8ad25e540b5be51e5a278b06fa8/data/${listId}`
+  let resp = null;
+  resp = await axios.delete(
+    `https://crudcrud.com/api/e78e609927364d55afec771fb882cc10/data/${listId}`
   );
-  return response;
+  return resp;
 };
 
 const CrudeService = {
-  deleteMethod,
-  postMethod,
   getMethod,
+  postMethod,
+  putMethod,
+  deleteMethod,
 };
 
 export default CrudeService;

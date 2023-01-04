@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import Header from "../Header/Header";
+import Header from "../Componant/Header/Header";
 // import { Header, navData, getCookie, Footer } from "esstart-components";
 
 const DashBoard = ({ headerShow }) => {

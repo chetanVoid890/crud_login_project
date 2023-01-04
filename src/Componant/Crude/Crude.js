@@ -49,10 +49,19 @@ const Crude = () => {
   };
 
   const handleCloseModal = () => {
+    setData(null);
     setIsOpenModal(false);
   };
 
   // =====================================
+  const onEditHandlar = (list) => {
+    setData(list);
+    setIsEdit(true);
+    setIsOpenModal(true);
+  };
+
+  // =====================================
+
   const onDeleteHandlar = (listId) => {
     console.log("listId", listId);
     setDeleteId(listId);
@@ -64,7 +73,7 @@ const Crude = () => {
   };
 
   const hanadleModalDelete = () => {
-    // dispatch(CrudeAction.deleteCrudeAction(deleteId));
+    dispatch(CrudeAction.deleteCrudeData(deleteId));
     setDeleteId(null);
     setIsDeleteModal(false);
   };
@@ -89,9 +98,7 @@ const Crude = () => {
                     <TableCell align="left">{list.rate}</TableCell>
                     <TableCell align="left">{list.count}</TableCell>
                     <TableCell align="left">
-                      {/* <Button onClick={() => onDeleteHandlar(list.id)}>
-                        Edit
-                      </Button> */}
+                      <Button onClick={() => onEditHandlar(list)}>Edit</Button>
                       <Button onClick={() => onDeleteHandlar(list._id)}>
                         Delete
                       </Button>
@@ -103,13 +110,18 @@ const Crude = () => {
           </TableContainer>
         </Card>
       </Container>
+
+      {/* Add Section & Edit */}
+
       <CrudeModal open={isOpenModal} onClose={handleCloseModal}>
         <CrudeModalView
           onClose={handleCloseModal}
           onEdit={isEdit}
-          currentAlternator={data}
+          currentModal={isEdit ? data : null}
         />
       </CrudeModal>
+
+      {/* #Delete Section  */}
 
       <DeleteModal
         open={isDeleteModal}
