@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import { Card, Grid, Stack, Button } from "@mui/material";
@@ -7,14 +6,14 @@ import FormProvider from "../../../Hooks_Form/FormProvider";
 
 // ----------------------------------------------------------------------
 
-export default function Delete_Modal({ onClose, handleDelete }) {
+export default function DeleteModalView({ closeModal, handleDelete }) {
   const methods = useForm({});
 
   const { reset, handleSubmit } = methods;
 
   const deleteSubmit = async () => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      window.location.reload(false);
       handleDelete();
     } catch (error) {
       console.log("DeleteProblem");
@@ -24,7 +23,6 @@ export default function Delete_Modal({ onClose, handleDelete }) {
   const onSubmit = async () => {
     // window.location.reload(false);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
     } catch (error) {
       console.log("hello");
@@ -48,7 +46,7 @@ export default function Delete_Modal({ onClose, handleDelete }) {
               >
                 Yes
               </LoadingButton>
-              <Button variant="outlined" color="error" onClick={onClose}>
+              <Button variant="outlined" color="error" onClick={closeModal}>
                 No
               </Button>
             </Stack>
