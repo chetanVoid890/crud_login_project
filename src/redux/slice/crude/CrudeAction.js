@@ -5,7 +5,7 @@ import {
   editCrudeDataSuccess,
   deleteCrudedataSuccess,
 } from "./CrudeSlice";
-import { dispatch, useDispatch } from "../../store";
+import { dispatch } from "../../store";
 
 // ================================================================================
 
@@ -22,27 +22,27 @@ export function GetCrude() {
 }
 // ================================================================================
 
-export function addCrudData(data) {
-  return async () => {
-    try {
-      const response = await CrudeService.postMethod(data);
-      dispatch(addCrudeDataSuccess(response));
-      dispatch(GetCrude(response));
-    } catch (error) {
-      console.log("PostError");
-    }
-  };
-}
+export const addCrudData = async (data) => {
+  console.log("editdataaction", data);
+  try {
+    const response = await CrudeService.postMethod(data);
+    dispatch(addCrudeDataSuccess(response));
+    dispatch(GetCrude());
+    return response;
+  } catch (error) {
+    console.log("PostError");
+  }
+};
 
 // ================================================================================
 
 export function editCrudeData(moduleId, data) {
-  console.log("editdata", data);
-  console.log("currentModal._id", moduleId);
+  // console.log("editdata", data);
+  // console.log("currentModal._id", moduleId);
   return async () => {
     try {
       const response = await CrudeService.putMethod(moduleId, data);
-      console.log("editResponse--=======", response);
+      // console.log("editResponse--=======", response);
       dispatch(editCrudeDataSuccess(response));
     } catch (error) {
       console.log("editError");

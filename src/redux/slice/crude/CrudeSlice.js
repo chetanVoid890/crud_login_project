@@ -14,15 +14,20 @@ const slice = createSlice({
       state.productList = action.payload.data;
     },
     addCrudeDataSuccess(state, action) {
-      console.log("responseStatus===================", action.payload.status);
+      // console.log(
+      //   "responseStatus==========",
+      //   action.payload.status
+      // );
       state.responseStatus = action.payload.status;
     },
     editCrudeDataSuccess(state, action) {
-      // state.productList = action.payload.data;
+      // console.log(
+      //   "responseStatusEdit======================================",
+      //   action.payload.status
+      // );
+      state.responseStatus = action.payload.status;
     },
-    deleteCrudedataSuccess(state, action) {
-      // state.productList = action.payload.data;
-    },
+    deleteCrudedataSuccess(state, action) {},
   },
 });
 

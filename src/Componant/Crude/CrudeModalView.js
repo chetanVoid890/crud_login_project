@@ -15,7 +15,7 @@ import CrudeAction from "../../redux/slice/crude/CrudeAction";
 import RHFTextField from "../../Hooks_Form/TextFiled";
 import FormProvider from "../../Hooks_Form/FormProvider";
 
-const CrudeModalView = ({ onClose, onEdit, currentModal }) => {
+const CrudeModalView = ({ closeModal, onEdit, currentModal }) => {
   const { responseStatus } = useSelector((state) => state.crude);
   const dispatch = useDispatch();
   const NewUserSchema = Yup.object().shape({
@@ -57,32 +57,30 @@ const CrudeModalView = ({ onClose, onEdit, currentModal }) => {
     if (!onEdit) {
       reset(defaultValues);
     }
-    if (responseStatus === 201) {
-      reset();
-      onClose();
+    if (responseStatus === 201 || responseStatus === 200) {
+      // window.locconsole.logation.reload(false);
+      console.log("--------------------------");
+      closeModal();
     }
-  }, [onEdit, currentModal, responseStatus]);
-
-  // useEffect(() => {
-  //   dispatch(CrudeAction.GetCrude());
-  // }, []);
+  }, [responseStatus, onEdit, currentModal]);
 
   // =======================================================
 
-  const onSubmit = (data) => {
+  const onSubmit = (data, e) => {
+    e.preventDefault();
     console.log("data", data);
-    console.log("onEdit", onEdit);
+    // console.log("onEdit", onEdit);
     try {
       if (onEdit) {
-        console.log("onEdit", onEdit);
+        // console.log("onEdit", onEdit);
         console.log("editdataorignal", data);
-        console.log("currentModal._id", currentModal._id);
-        dispatch(CrudeAction.editCrudeData(currentModal._id, data));
+        // console.log("currentModal._id", currentModal._id);
+        dispatch(CrudeAction.editCrudeData(currentModal.id, data));
       } else {
         dispatch(CrudeAction.addCrudData(data));
       }
     } catch (error) {
-      console.log("Add && Edit Eroor");
+      // console.log("Add && Edit Eroor");
     }
   };
 
@@ -121,11 +119,10 @@ const CrudeModalView = ({ onClose, onEdit, currentModal }) => {
                   variant="contained"
                   loading={isSubmitting}
                   sx={{ mr: 3 }}
-                  // onClick={onClose}
                 >
                   {onEdit ? "Edit Alternator" : "Add Alternator"}
                 </LoadingButton>
-                <Button variant="outlined" color="error" onClick={onClose}>
+                <Button variant="outlined" color="error" onClick={closeModal}>
                   Cancel
                 </Button>
               </Stack>

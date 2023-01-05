@@ -1,12 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Dialog, Paper } from "@mui/material";
-// import CrudeModalView from "./CrudeModalView";
-CrudeModal.propTypes = {
-  open: PropTypes.bool,
-  onClose: PropTypes.bool,
-  children: PropTypes.any,
-};
 
 export default function CrudeModal({ open, onClose, children }) {
   return (

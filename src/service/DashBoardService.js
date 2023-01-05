@@ -10,9 +10,4 @@ const initialDetails = async () => {
   }
 };
 
-const deleteAlternator = async (alternatorId) => {
-  const response = await axios.delete("https://fakestoreapi.com/products");
-  return response;
-};
-
 export default initialDetails;

@@ -12,7 +12,7 @@ import {
   TableContainer,
 } from "@mui/material";
 import DeleteModal from "./Delete/DeleteModal";
-import Delete_Modal from "./Delete/Delete_Modal";
+import DeleteModalView from "./Delete/DeleteModalView";
 import CrudeAction from "../../redux/slice/crude/CrudeAction";
 import CrudeModal from "./CrudeModal";
 import CrudeModalView from "./CrudeModalView";
@@ -27,13 +27,22 @@ const TALBE_HEAD = [
   { id: "action", label: "action", alignRight: false },
 ];
 
+// ---------------------------
+
 const Crude = () => {
+  const productListData = [
+    { category: "hello", price: 2, rate: 1, count: 1, _id: 1 },
+    { category: "add", price: 2, rate: 1, count: 1, _id: 1 },
+    { category: "dwqr", price: 2, rate: 1, count: 1, _id: 1 },
+    { category: "wedwfd", price: 2, rate: 1, count: 1, _id: 1 },
+  ];
+  // ---------------------------
+
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [deleteId, setDeleteId] = useState("");
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [data, setData] = useState("");
-
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.crude);
 
@@ -41,29 +50,31 @@ const Crude = () => {
     dispatch(CrudeAction.GetCrude());
   }, []);
 
-  // =====================================
+  // Add Section=======================
 
   const handleAdd = (e) => {
-    e.preventDefault();
+    console.log("azsghfdjhsbn ");
     setIsOpenModal(true);
+    console.log("hello", isOpenModal, setIsOpenModal);
   };
 
   const handleCloseModal = () => {
     setData(null);
+    setIsEdit(false);
     setIsOpenModal(false);
   };
 
-  // =====================================
+  // Edit Section ========================
   const onEditHandlar = (list) => {
     setData(list);
     setIsEdit(true);
     setIsOpenModal(true);
   };
 
-  // =====================================
+  // Delete Section =========================
 
   const onDeleteHandlar = (listId) => {
-    console.log("listId", listId);
+    // console.log("listId", listId);
     setDeleteId(listId);
     setIsDeleteModal(true);
   };
@@ -92,14 +103,14 @@ const Crude = () => {
               <UserListHead headLabel={TALBE_HEAD} />
               <TableBody>
                 {productList.map((list) => (
-                  <TableRow hover key={list._id} tabIndex={-1}>
+                  <TableRow hover key={list.id} tabIndex={-1}>
                     <TableCell align="left">{list.category}</TableCell>
                     <TableCell align="left">{list.price}</TableCell>
-                    <TableCell align="left">{list.rate}</TableCell>
                     <TableCell align="left">{list.count}</TableCell>
+                    <TableCell align="left">{list.rate}</TableCell>
                     <TableCell align="left">
                       <Button onClick={() => onEditHandlar(list)}>Edit</Button>
-                      <Button onClick={() => onDeleteHandlar(list._id)}>
+                      <Button onClick={() => onDeleteHandlar(list.id)}>
                         Delete
                       </Button>
                     </TableCell>
@@ -115,7 +126,7 @@ const Crude = () => {
 
       <CrudeModal open={isOpenModal} onClose={handleCloseModal}>
         <CrudeModalView
-          onClose={handleCloseModal}
+          closeModal={handleCloseModal}
           onEdit={isEdit}
           currentModal={isEdit ? data : null}
         />
@@ -128,8 +139,8 @@ const Crude = () => {
         onClose={handleDeleteModalClose}
         className="modalopen"
       >
-        <Delete_Modal
-          onClose={handleDeleteModalClose}
+        <DeleteModalView
+          closeModal={handleDeleteModalClose}
           handleDelete={hanadleModalDelete}
         />
       </DeleteModal>
