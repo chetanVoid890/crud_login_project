@@ -14,29 +14,26 @@ const slice = createSlice({
       state.productList = action.payload.data;
     },
     addCrudeDataSuccess(state, action) {
-      // console.log(
-      //   "responseStatus==========",
-      //   action.payload.status
-      // );
       state.responseStatus = action.payload.status;
     },
     editCrudeDataSuccess(state, action) {
-      // console.log(
-      //   "responseStatusEdit======================================",
-      //   action.payload.status
-      // );
       state.responseStatus = action.payload.status;
     },
-    deleteCrudedataSuccess(state, action) {},
+    deleteCrudedataSuccess(state, action) {
+      state.responseStatus = "";
+    },
+    removeStatus(state) {
+      state.responseStatus = "";
+    },
   },
 });
 
 export default slice.reducer;
 
-// Actions
 export const {
   getDataSuccess,
   addCrudeDataSuccess,
   editCrudeDataSuccess,
   deleteCrudedataSuccess,
+  removeStatus,
 } = slice.actions;

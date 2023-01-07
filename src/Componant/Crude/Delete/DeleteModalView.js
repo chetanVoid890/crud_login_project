@@ -8,12 +8,10 @@ import FormProvider from "../../../Hooks_Form/FormProvider";
 
 export default function DeleteModalView({ closeModal, handleDelete }) {
   const methods = useForm({});
-
   const { reset, handleSubmit } = methods;
 
   const deleteSubmit = async () => {
     try {
-      window.location.reload(false);
       handleDelete();
     } catch (error) {
       console.log("DeleteProblem");
@@ -21,7 +19,6 @@ export default function DeleteModalView({ closeModal, handleDelete }) {
   };
 
   const onSubmit = async () => {
-    // window.location.reload(false);
     try {
       reset();
     } catch (error) {

@@ -1,8 +1,6 @@
 import initialDetails from "../../../service/DashBoardService";
-
 import { getProductSuccess } from "./ProductSlice";
-import { dispatch, useDispatch } from "../../store";
-// import {useDispatch, }
+import { dispatch } from "../../store";
 
 function GetProduct() {
   return async () => {

@@ -1,57 +1,30 @@
 import "./product.css";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import { CardHeader } from "@mui/material/";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-// import GetProduct from "../redux/slice/product/ProductAction";
 import GetProduct from "../../redux/slice/product/ProductAction";
 import { Box } from "@mui/system";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-
 import Button from "@mui/material/Button";
 import ProductView from "./ProductView";
 
 // ---------------------------------------
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
 const Product = () => {
   const [isViewModal, setIsViewModal] = useState(false);
-
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(GetProduct());
   }, []);
-
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
 
   const Div = styled("div")(({ theme }) => ({
     ...theme.typography.button,
@@ -164,44 +137,3 @@ const Product = () => {
 };
 
 export default Product;
-
-// else {
-//   if (authStatus === 1) {
-//     navigation("/product");
-//   } else {
-//     navigation("/");
-//   }
-// }
-
-// const initialDetails = () => {
-//   try {
-//     axios
-//       .get("https://fakestoreapi.com/products")
-//       .then((response) => {
-//         console.log(response.data);
-//         setList([...response.data]);
-//         console.log("hello", response.data);
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-// console.log("productlisrt", productList);
-
-// dispatch(GetProduct());
-// const { pathname } = useLocation();
-// const { id } = useParams();
-// const [searchParams] = useSearchParams();
-//   const { authStatus } = useContext(AuthContext);
-//   useEffect(() => {
-//     console.log(pathname);
-//     console.log(searchParams.get("email"));
-//     console.log(searchParams.get("password"));
-//     if (sessionStorage.getItem("token") == "false") {
-//       navigation("/");
-//     }
-//   }, []);

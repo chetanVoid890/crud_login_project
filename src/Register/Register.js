@@ -1,15 +1,10 @@
-import { useState } from "react";
 import { registerSuccess } from "../redux/slice/register/RegisterSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { Button, TextField, Box } from "@mui/material";
-// import { validationState, initialForm } from "../Helper/Helper";
 
 const Register = () => {
-  //   const [getForm, setForm] = useState(initialForm);
-  //   const [getFormValidation, setFormValidation] = useState(validationState);
-  //   const [getSubmit, setSubmit] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
@@ -29,7 +24,6 @@ const Register = () => {
     } else if (!passwordPattern.test(values.password)) {
       errors.email = "Valid password Required";
     }
-
     return errors;
   };
 
@@ -42,9 +36,7 @@ const Register = () => {
 
       validate: signInValidate,
       onSubmit: (values) => {
-        // debugger;
         const { email, password } = values;
-
         dispatch(registerSuccess(values));
         navigation("/login");
       },
@@ -77,7 +69,6 @@ const Register = () => {
             <TextField
               fullWidth
               type="password"
-              // label="Enter Password"
               id="password"
               className="textField"
               onChange={handleChange}
@@ -101,33 +92,3 @@ const Register = () => {
 };
 
 export default Register;
-
-const onChangeHandler = (event) => {
-  // setForm({
-  //   ...getForm,
-  //   [event.target.name]: event.target.value,
-  // });
-  // console.log("register", getForm);
-};
-
-const onSubmitHandler = (event) => {
-  // event.preventDefault();
-  // let getFormValidationDetails = getFormValidation;
-  // for (let obj in getFormValidationDetails) {
-  //   if (getFormValidationDetails[obj]["required"] && getForm[obj] === "") {
-  //     getFormValidationDetails[obj]["status"] = "required";
-  //   } else if (
-  //     getFormValidationDetails[obj]["pattern"] &&
-  //     !getFormValidationDetails[obj]["pattern"].test(getForm[obj])
-  //   ) {
-  //     getFormValidationDetails[obj]["status"] = "pattern";
-  //   } else {
-  //     getFormValidationDetails[obj]["status"] = "false";
-  //   }
-  // }
-  // setFormValidation({ ...getFormValidationDetails });
-  // setSubmit(true);
-  // dispatch(registerSuccess(values));
-  // // console.log("helllo", getForm);
-  // navigation("/login");
-};

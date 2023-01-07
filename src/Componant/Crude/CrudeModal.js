@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Dialog, Paper } from "@mui/material";
+import { Dialog } from "@mui/material";
 
 export default function CrudeModal({ open, onClose, children }) {
   return (

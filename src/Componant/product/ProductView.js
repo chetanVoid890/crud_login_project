@@ -1,5 +1,4 @@
 import * as React from "react";
-// import "./product.css";
 import "./product.css";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
