@@ -57,30 +57,29 @@ const CrudeModalView = ({ closeModal, onEdit, currentModal }) => {
     if (!onEdit) {
       reset(defaultValues);
     }
-    if (responseStatus === 201 || responseStatus === 200) {
-      // window.locconsole.logation.reload(false);
-      console.log("--------------------------");
+    if (responseStatus === 201) {
+      reset();
       closeModal();
+      dispatch(CrudeAction.removeStatuss());
+    }
+    if (responseStatus === 200) {
+      reset();
+      closeModal();
+      dispatch(CrudeAction.removeStatuss());
     }
   }, [responseStatus, onEdit, currentModal]);
 
   // =======================================================
 
-  const onSubmit = (data, e) => {
-    e.preventDefault();
-    console.log("data", data);
-    // console.log("onEdit", onEdit);
+  const onSubmit = (data) => {
     try {
       if (onEdit) {
-        // console.log("onEdit", onEdit);
-        console.log("editdataorignal", data);
-        // console.log("currentModal._id", currentModal._id);
         dispatch(CrudeAction.editCrudeData(currentModal.id, data));
       } else {
         dispatch(CrudeAction.addCrudData(data));
       }
     } catch (error) {
-      // console.log("Add && Edit Eroor");
+      console.log("Add && Edit Eroor");
     }
   };
 

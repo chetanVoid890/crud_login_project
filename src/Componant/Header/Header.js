@@ -1,7 +1,5 @@
-// import './Header.css';
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,9 +11,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Cookies from "js-cookie";
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const navigation = useNavigate();
-
   const onLogoutHandler = (event) => {
     event.preventDefault();
     Cookies.remove("user");
@@ -50,7 +45,6 @@ const Header = () => {
           <NavLink to="/crude" className="nav-link">
             <MenuItem sx={{ color: "white" }}>Crud</MenuItem>
           </NavLink>
-
           <Button variant="contained" type="submit" onClick={onLogoutHandler}>
             Logout
           </Button>
@@ -60,34 +54,3 @@ const Header = () => {
   );
 };
 export default Header;
-
-// <div>
-//   <nav className="navbar navbar-expand-lg navbar-light bg-light">
-//     <a className="navbar-brand">
-//       <Link to="">ExhiByte Solution</Link>
-//     </a>
-//     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-//       {!auth.token && (
-//         <form className="form-inline my-2 my-lg-0">
-//           <Button
-//             className="button-container__start remove_btn_hover"
-//             type="submit"
-//           >
-//             LOGIN
-//           </Button>
-//         </form>
-//       )}
-//       {auth.token && (
-//         <form className="form-inline my-2 my-lg-0">
-//           <Button
-//             className="button-container__start remove_btn_hover"
-//             type="submit"
-//             onClick={onLogoutHandler}
-//           >
-//             Logout
-//           </Button>
-//         </form>
-//       )}
-//     </div>
-//   </nav>
-// </div>

@@ -30,12 +30,6 @@ const TALBE_HEAD = [
 // ---------------------------
 
 const Crude = () => {
-  const productListData = [
-    { category: "hello", price: 2, rate: 1, count: 1, _id: 1 },
-    { category: "add", price: 2, rate: 1, count: 1, _id: 1 },
-    { category: "dwqr", price: 2, rate: 1, count: 1, _id: 1 },
-    { category: "wedwfd", price: 2, rate: 1, count: 1, _id: 1 },
-  ];
   // ---------------------------
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -53,9 +47,7 @@ const Crude = () => {
   // Add Section=======================
 
   const handleAdd = (e) => {
-    console.log("azsghfdjhsbn ");
     setIsOpenModal(true);
-    console.log("hello", isOpenModal, setIsOpenModal);
   };
 
   const handleCloseModal = () => {
@@ -74,7 +66,6 @@ const Crude = () => {
   // Delete Section =========================
 
   const onDeleteHandlar = (listId) => {
-    // console.log("listId", listId);
     setDeleteId(listId);
     setIsDeleteModal(true);
   };
@@ -94,7 +85,7 @@ const Crude = () => {
   return (
     <>
       <Container className="customelisttable">
-        <Button variant="contained" onClick={(e) => handleAdd(e)}>
+        <Button variant="contained" onClick={(e) => handleAdd()}>
           Add
         </Button>
         <Card>

@@ -6,9 +6,7 @@ import { Route } from "./Route";
 // default routes
 const RouteInitial = () => {
   const { authStatus } = useContext(AuthContext);
-  console.log(authStatus, "----------------------");
   const routing = useRoutes(Route(authStatus));
-
   return <>{routing}</>;
 };
 

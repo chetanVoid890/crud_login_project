@@ -17,5 +17,4 @@ const slice = createSlice({
 
 export default slice.reducer;
 
-// Actions
 export const { getProductSuccess } = slice.actions;

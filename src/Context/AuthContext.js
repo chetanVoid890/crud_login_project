@@ -11,7 +11,7 @@ export const AuthStatus = {
 };
 
 const defaultState = {
-  authStatus: AuthStatus.loading,
+  authStatus: AuthStatus.Loading,
   setAuthStatus: (auth) => {},
 };
 
